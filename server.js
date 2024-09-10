@@ -29,6 +29,9 @@ mongoose.connection.on("error", (err) => {
     console.log(err)
 })
 
+// import mongoose models
+const Book = require('./models/books')
+console.log(Book)   // <- testing if importing from models folder
 
 
 //***************************
