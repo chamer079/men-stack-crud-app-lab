@@ -7,7 +7,7 @@ const bookSchema = new mongoose.Schema({
     author: { type: String, required: true },
     releaseDate: { type: Date, required: true },
     image: { type: String, required: true },
-    haveRead: { type: Boolean, required: true },
+    haveRead: Boolean,
 })
 
 // mount the model using the schema

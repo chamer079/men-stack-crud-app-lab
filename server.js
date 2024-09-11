@@ -31,14 +31,15 @@ mongoose.connection.on("error", (err) => {
 })
 
 // import mongoose models
-const Book = require('./models/books')
+const Book = require('./models/book')
 // console.log(Book)   // <- testing if importing from models folder
 
 
 //***************************
 //       MIDDLEWARE
 //***************************
-
+// app.use() - allows to plug additional functionality into express
+app.use(express.urlencoded({ extended: false }))    // <- decodes the form data - stores the key:value pair in req.body
 
 
 
@@ -56,6 +57,28 @@ app.get('/', async (req, res) => {
 app.get('/books/new', (req,res) => {
     // res.send("Form page to add a new book")
     res.render('books/new')
+})
+
+// Post -> (/books)
+app.post('/books', async (req, res) => {
+    if(req.body.haveRead === "on"){  
+        req.body.haveRead = true
+    } else{
+        req.body.haveRead = false
+    }
+
+    try{
+        const createdBook = await Book.create(req.body)
+        
+        res.status(200).send(createdBook)
+        res.redirect('/books/new')  // <- prevents user from resubmitting form multi times
+    } catch(err){
+        console.log(err)
+        res.status(400).json ({error: err.message})
+    }
+    
+    // console.log(req.body)
+    res.redirect('/books')
 })
 
 
