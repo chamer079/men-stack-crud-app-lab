@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URI) //<- opens connection to MongoDB
 
 // mongoose event listener
 mongoose.connection.on("connected", () => {
-    console.log(`Connected to MongoDB ${mongoose.connection.name}`)
+    // console.log(`Connected to MongoDB ${mongoose.connection.name}`)
 })
 
 // mongoose event listener
@@ -59,9 +59,13 @@ app.get('/books/new', (req,res) => {
     res.render('books/new')
 })
 
+app.get('/books', (req,res) => {
+    res.render('/books')
+})
+
 // Post -> (/books)
 app.post('/books', async (req, res) => {
-    if(req.body.haveRead === "on"){  
+    if(req.body.haveRead){  
         req.body.haveRead = true
     } else{
         req.body.haveRead = false
@@ -70,15 +74,14 @@ app.post('/books', async (req, res) => {
     try{
         const createdBook = await Book.create(req.body)
         
-        res.status(200).send(createdBook)
-        res.redirect('/books/new')  // <- prevents user from resubmitting form multi times
+        // res.status(200).send(createdBook)
+        res.redirect('/books')  // <- prevents user from resubmitting form multi times
     } catch(err){
         console.log(err)
         res.status(400).json ({error: err.message})
     }
     
     // console.log(req.body)
-    res.redirect('/books')
 })
 
 
