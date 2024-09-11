@@ -11,6 +11,7 @@ const mongoose = require("mongoose")
 //   APP & CONFIGURATIONS
 //***************************
 dotenv.config()
+// console.log("connection string: ", process.env.MONGODB_URI) //<- testing the UIR
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -31,7 +32,7 @@ mongoose.connection.on("error", (err) => {
 
 // import mongoose models
 const Book = require('./models/books')
-console.log(Book)   // <- testing if importing from models folder
+// console.log(Book)   // <- testing if importing from models folder
 
 
 //***************************
@@ -45,12 +46,17 @@ console.log(Book)   // <- testing if importing from models folder
 //***************************
 //         ROUTES
 //***************************
-// Home / Landing Page - ('/')
-app.get('/', (req, res) => {
+// Home / Landing Page - GET -> ('/')
+app.get('/', async (req, res) => {
     // res.send("Home Page")   // <- testing the home page
     res.render("index")
 })
 
+// New Page - form page to add a new book - GET -> (/books/new)
+app.get('/books/new', (req,res) => {
+    // res.send("Form page to add a new book")
+    res.render('books/new')
+})
 
 
 //***************************
