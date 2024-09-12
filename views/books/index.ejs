@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books Index</title>
+</head>
+<body>
+    <h1>All the books you want to read...</h1>
+    <ul>
+        <% books.forEach(book => { %>
+        <li><%= book.title %><%= book.author %><%= book.genre %><img src="<%= book.image %>"></li>
+        <% }) %>
+    </ul>
+</body>
+</html>

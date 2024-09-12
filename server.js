@@ -32,6 +32,7 @@ mongoose.connection.on("error", (err) => {
 
 // import mongoose models
 const Book = require('./models/book')
+const { render } = require("ejs")
 // console.log(Book)   // <- testing if importing from models folder
 
 
@@ -53,15 +54,21 @@ app.get('/', async (req, res) => {
     res.render("index")
 })
 
+// Index Page - GET -> ('/books')
+app.get('/books', async (req, res) => {
+    const allBooks = await Book.find()
+    console.log(allBooks)
+    // res.send("Index Page")
+    res.render("books/index", { books: allBooks})
+})
+
 // New Page - form page to add a new book - GET -> (/books/new)
 app.get('/books/new', (req,res) => {
     // res.send("Form page to add a new book")
     res.render('books/new')
 })
 
-app.get('/books', (req,res) => {
-    res.render('/books')
-})
+
 
 // Post -> (/books)
 app.post('/books', async (req, res) => {
