@@ -68,8 +68,6 @@ app.get('/books/new', (req,res) => {
     res.render('books/new')
 })
 
-
-
 // Post -> (/books)
 app.post('/books', async (req, res) => {
     if(req.body.haveRead){  
@@ -87,7 +85,6 @@ app.post('/books', async (req, res) => {
         console.log(err)
         res.status(400).json ({error: err.message})
     }
-    
     // console.log(req.body)
 })
 
