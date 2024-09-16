@@ -6,6 +6,7 @@ const dotenv = require("dotenv")
 const mongoose = require("mongoose")
 const morgan = require("morgan")
 const methodOverride = require("method-override")
+const path = require("path")    // <-importing stylesheets
 
 
 //***************************
@@ -44,7 +45,7 @@ const Book = require('./models/book')
 app.use(express.urlencoded({ extended: false }))    // <- decodes the form data - stores the key:value pair in req.body
 app.use(methodOverride("_method"))
 app.use(morgan("dev"))
-
+app.use(express.static(path.join(__dirname, "public"))) // <- serves static files from 'public' dir
 
 
 //***************************

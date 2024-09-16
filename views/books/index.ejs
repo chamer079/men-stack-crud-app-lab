@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css">
     <title>Books Index</title>
 </head>
 <body>
-    <h1>All the books you want to read...</h1>
+    <a href="/books/new">Add a Book</a>
+    <h2>My reading list...</h2>
     <div>
         <% books.forEach(book => { %>
-        <a href="/books/<%= book._id %>"><img src="<%= book.image %>"></a>
+            <% if(book.haveRead === false){ %> 
+                <a href="/books/<%= book._id %>"><img src="<%= book.image %>"></a>  
+            <% } %>
         <% }) %>
         <!--  href will make each image a link to the individual book-->
     </div>
-    
+    <h2>All the books that have been read...</h2>
+    <div>
+        <% books.forEach(book => { %> 
+            <% if(book.haveRead === true) { %>
+            <a href="/books/<%= book._id %>"><img src="<%= book.image %>"></a>  
+            <% } %>     
+        <% }) %>
+    </div>
 </body>
 </html>
