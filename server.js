@@ -84,6 +84,35 @@ app.get('/books/:id', async (req, res) => {
     }
 })
 
+// Edit Page - form to edit the book's info - (/books/:id/edit)
+app.get('/books/:id/edit', async (req, res) => {
+    try{
+        const bookToEdit = await Book.findById(req.params.id)
+        // console.log(bookToEdit)
+        res.render('books/edit', {book: bookToEdit})
+    } catch(err){
+        console.log(err)
+        redirect('/')
+    }
+})
+
+// Update Page -  (/books/:id)
+app.get('/books/:id', async (req, res) => {
+    if(req.body.haveRead){  
+        req.body.haveRead = true
+    } else{
+        req.body.haveRead = false
+    }
+
+    try{
+        const updateBook = await Book.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        res.redirect('/books')
+    } catch(err){
+        console.log(err)
+        res.redirect(`/books/${req.params.id}`)
+    }
+})
+
 // Post -> create a new Book doc - (/books)
 app.post('/books', async (req, res) => {
     if(req.body.haveRead){  
