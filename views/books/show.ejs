@@ -14,5 +14,8 @@
         <li>Genre: <%= book.genre %></li>
         <li>Released: <%= book.releaseDate %></li>
     </ul>
+    <form action="/books/<%= book._id %>?_method=DELETE" method="POST">
+        <button type="submit">DELETE BOOK</button>
+    </form>
 </body>
 </html>

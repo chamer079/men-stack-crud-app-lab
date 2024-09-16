@@ -4,6 +4,8 @@
 const express = require("express")
 const dotenv = require("dotenv")
 const mongoose = require("mongoose")
+const morgan = require("morgan")
+const methodOverride = require("method-override")
 
 
 //***************************
@@ -31,8 +33,8 @@ mongoose.connection.on("error", (err) => {
 
 // import mongoose models
 const Book = require('./models/book')
-const { render } = require("ejs")
 // console.log(Book)   // <- testing if importing from models folder
+
 
 
 //***************************
@@ -40,7 +42,8 @@ const { render } = require("ejs")
 //***************************
 // app.use() - allows to plug additional functionality into express
 app.use(express.urlencoded({ extended: false }))    // <- decodes the form data - stores the key:value pair in req.body
-
+app.use(methodOverride("_method"))
+app.use(morgan("dev"))
 
 
 
@@ -81,7 +84,7 @@ app.get('/books/:id', async (req, res) => {
     }
 })
 
-// Post -> (/books)
+// Post -> create a new Book doc - (/books)
 app.post('/books', async (req, res) => {
     if(req.body.haveRead){  
         req.body.haveRead = true
@@ -99,6 +102,18 @@ app.post('/books', async (req, res) => {
         res.status(400).json ({error: err.message})
     }
     // console.log(req.body)
+})
+
+// DELETE - deletes a book from the collection - (/books/:id)
+app.delete('/books/:id', async (req, res) => {
+    try{
+        const deleteBook = await Book.findByIdAndDelete(req.params.id)
+        // console.log("Response for DB deletion", deleteBook)
+        res.redirect('/books')
+    } catch(err){
+        console.log(err)
+        redirect('/')
+    }
 })
 
 
