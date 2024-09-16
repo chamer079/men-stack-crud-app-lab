@@ -9,8 +9,9 @@
     <h1>All the books you want to read...</h1>
     <ul>
         <% books.forEach(book => { %>
-        <li><%= book.title %><%= book.author %><%= book.genre %><img src="<%= book.image %>"></li>
+        <li><img src="<%= book.image %>"></li>
         <% }) %>
     </ul>
+    
 </body>
 </html>

@@ -6,7 +6,6 @@ const dotenv = require("dotenv")
 const mongoose = require("mongoose")
 
 
-
 //***************************
 //   APP & CONFIGURATIONS
 //***************************
@@ -18,7 +17,7 @@ const PORT = process.env.PORT || 3000
 
 app.set("view engine", "ejs")
 
-mongoose.connect(process.env.MONGODB_URI) //<- opens connection to MongoDB
+mongoose.connect(process.env.MONGODB_URI) //<- zopens connection to MongoDB
 
 // mongoose event listener
 mongoose.connection.on("connected", () => {
@@ -49,7 +48,7 @@ app.use(express.urlencoded({ extended: false }))    // <- decodes the form data 
 //         ROUTES
 //***************************
 // Home / Landing Page - GET -> ('/')
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
     // res.send("Home Page")   // <- testing the home page
     res.render("index")
 })
@@ -57,7 +56,7 @@ app.get('/', async (req, res) => {
 // Index Page - GET -> ('/books')
 app.get('/books', async (req, res) => {
     const allBooks = await Book.find()
-    console.log(allBooks)
+    // console.log(allBooks)
     // res.send("Index Page")
     res.render("books/index", { books: allBooks})
 })
@@ -66,6 +65,20 @@ app.get('/books', async (req, res) => {
 app.get('/books/new', (req,res) => {
     // res.send("Form page to add a new book")
     res.render('books/new')
+})
+
+// Show Page - show book by id - GET -> (/books/:id)
+app.get('/books/:id', async (req, res) => {
+    // res.send(`Showing book page for ${req.params.id}`)
+
+    try{
+        // console.log(req.params)
+        const foundBook = await Book.findById(req.params.id)
+        res.render('books/show', {book: foundBook})
+    } catch(err){
+        console.log(err)
+        res.redirect(`/`)
+    }
 })
 
 // Post -> (/books)
