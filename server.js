@@ -84,7 +84,7 @@ app.get('/books/:id', async (req, res) => {
     }
 })
 
-// Edit Page - form to edit the book's info - (/books/:id/edit)
+// Edit Page - form to edit the book's info - GET -> (/books/:id/edit)
 app.get('/books/:id/edit', async (req, res) => {
     try{
         const bookToEdit = await Book.findById(req.params.id)
@@ -96,18 +96,19 @@ app.get('/books/:id/edit', async (req, res) => {
     }
 })
 
-// Update Page -  (/books/:id)
-app.get('/books/:id', async (req, res) => {
-    console.log("testing data from form:", req.body)
-    if(req.body.haveRead){  
-        req.body.haveRead = true
-    } else{
-        req.body.haveRead = false
-    }
-
+// Update Page - sends updated data to the DB -> PUT - (/books/:id)
+app.put('/books/:id', async (req, res) => {
+    
     try{
-        const updateBook = await Book.findByIdAndUpdate(req.params.id, req.body, {new: true})
-        res.redirect('/books')
+        console.log("testing data from form:", req.body)
+        if(req.body.haveRead){  
+            req.body.haveRead = true
+        } else{
+            req.body.haveRead = false
+        }
+
+        await Book.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        res.redirect(`/books/${req.params.id}`)
     } catch(err){
         console.log(err)
         res.redirect(`/books/${req.params.id}`)
