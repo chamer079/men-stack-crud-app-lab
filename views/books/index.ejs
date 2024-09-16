@@ -7,11 +7,12 @@
 </head>
 <body>
     <h1>All the books you want to read...</h1>
-    <ul>
+    <div>
         <% books.forEach(book => { %>
-        <li><img src="<%= book.image %>"></li>
+        <a href="/books/<%= book._id %>"><img src="<%= book.image %>"></a>
         <% }) %>
-    </ul>
+        <!--  href will make each image a link to the individual book-->
+    </div>
     
 </body>
 </html>

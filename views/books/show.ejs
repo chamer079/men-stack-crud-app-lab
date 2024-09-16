@@ -6,6 +6,8 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="/books/<%= book._id %>/edit"> Edit <%= book.title %></a>
+    <a href="/books">Back to Books</a>
     <h1>Show me the Book...</h1>
     <h2><%= book.title %></h2>
     <img src="<%= book.image %>">
@@ -20,8 +22,10 @@
         <% } %>
         </li>
     </ul>
-    <form action="/books/<%= book._id %>?_method=DELETE" method="POST">
-        <button type="submit">DELETE BOOK</button>
-    </form>
-</body>
+    <div>
+        <form action="/books/<%= book._id %>?_method=DELETE" method="POST">
+            <button type="submit">DELETE BOOK</button>
+        </form>
+    </div>
+  </body>
 </html>
