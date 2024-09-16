@@ -13,6 +13,12 @@
         <li>Author: <%= book.author %></li>
         <li>Genre: <%= book.genre %></li>
         <li>Released: <%= book.releaseDate %></li>
+        <li>Read the book? <% if(book.haveRead){ %>
+            <p>Yep!</p>
+        <% }else{%>
+            <p>Not yet...</p>
+        <% } %>
+        </li>
     </ul>
     <form action="/books/<%= book._id %>?_method=DELETE" method="POST">
         <button type="submit">DELETE BOOK</button>
