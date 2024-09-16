@@ -98,6 +98,7 @@ app.get('/books/:id/edit', async (req, res) => {
 
 // Update Page -  (/books/:id)
 app.get('/books/:id', async (req, res) => {
+    console.log("testing data from form:", req.body)
     if(req.body.haveRead){  
         req.body.haveRead = true
     } else{
